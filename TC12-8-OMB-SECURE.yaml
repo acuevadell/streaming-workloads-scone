@@ -1,0 +1,13 @@
+consumerBacklogSizeGB: 0
+consumerPerSubscription: 1
+messageSize: 102400
+name: TC12
+partitionsPerTopic: 1
+payloadFile: payload/payload-100Kb.data
+producerRate: 10000
+producersPerTopic: 1
+subscriptionsPerTopic: 1
+testDurationMinutes: 5
+topics: 1
+warmupDurationMinutes: 1
+

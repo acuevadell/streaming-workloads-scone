@@ -1,0 +1,13 @@
+consumerBacklogSizeGB: 0
+consumerPerSubscription: 1
+messageSize: 100
+name: TC09
+partitionsPerTopic: 1
+payloadFile: payload/payload-100b.data
+producerRate: 10000
+producersPerTopic: 1
+subscriptionsPerTopic: 1
+testDurationMinutes: 5
+topics: 1
+warmupDurationMinutes: 1
+

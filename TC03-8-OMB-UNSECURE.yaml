@@ -1,0 +1,13 @@
+consumerBacklogSizeGB: 0
+consumerPerSubscription: 1
+messageSize: 10240
+name: TC03
+partitionsPerTopic: 1
+payloadFile: payload/payload-10Kb.data
+producerRate: 100
+producersPerTopic: 1
+subscriptionsPerTopic: 1
+testDurationMinutes: 5
+topics: 1
+warmupDurationMinutes: 1
+

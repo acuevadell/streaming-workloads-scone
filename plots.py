@@ -113,7 +113,7 @@ def subplot_cdf(data1, data2, row, title, autolimit=False):
         for j in range(2):
             labels = list(spr1[i].apply(get_label, axis=1))
             
-            lbl = 'Event Size = ' + format_label(spr1[a]['Message_Size'].iloc[0])
+            lbl = 'Event Size ' + format_label(spr1[a]['Message_Size'].iloc[0])
             axs[i][j].plot(labels, spr1[a][row], label=get_security(spr1[a]) )
             axs[i][j].plot(labels, spr2[a][row], label=get_security(spr2[a]) )
 
@@ -240,7 +240,7 @@ def throughout_subplot(data1, data2, row):
         for j in range(2):
             labels = list(spr1[i].apply(get_label, axis=1))
             
-            lbl = 'Event Size = ' + format_label(spr1[a]['Message_Size'].iloc[0])
+            lbl = 'Event Size ' + format_label(spr1[a]['Message_Size'].iloc[0])
             axs[i][j].plot(labels, spr1[a][row], label="Standard")
             axs[i][j].plot(labels, spr2[a][row], label="Secured")
 

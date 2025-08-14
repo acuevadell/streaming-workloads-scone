@@ -180,7 +180,7 @@ def latencies_plot(data):
         lbl = format_producerrate(datas[i]['Producer_Rate'].iloc[0])
         axs[i].set_title(lbl)
         
-        axs[i].set_xlabel('Message Sizes')
+        axs[i].set_xlabel('Event Sizes')
         axs[i].set_ylabel('Difference Between Lacencies')
         axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency50'], label="Latency 50")
         axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency75'], label="Latency 75")

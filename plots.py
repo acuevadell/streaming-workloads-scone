@@ -44,8 +44,8 @@ def subplot_cdf_percentile(data, test_cases):
             f2 = data_list[a][ data_list[a]['Security'] == 'Secure' ]
             message_size = f1['Message_Size'].iloc[0]
             
-            axs[i][j].plot(f1['Latency'], f1['Percentile'], label='STANDARD')
-            axs[i][j].plot(f2['Latency'], f2['Percentile'], label='SCONE')
+            axs[i][j].plot(f1['Latency'], f1['Percentile'], label='Standard')
+            axs[i][j].plot(f2['Latency'], f2['Percentile'], label='Secured')
             axs[i][j].set_xscale('log')
             axs[i][j].set_xlim(0.1, 10000)
             axs[i][j].set_title('Event Size ' + format_label(message_size))

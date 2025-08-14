@@ -181,7 +181,7 @@ def latencies_plot(data):
         axs[i].set_title(lbl)
         
         axs[i].set_xlabel('Message Sizes')
-        axs[i].set_ylabel('Percentage Difference Between Lacencies')
+        axs[i].set_ylabel('Difference Between Lacencies')
         axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency50'], label="Latency 50")
         axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency75'], label="Latency 75")
         axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency95'], label="Latency 95")
@@ -192,9 +192,9 @@ def latencies_plot(data):
     
     plt.tight_layout()
     #plt.show()
-    plt.savefig('img/Latencies.png', bbox_inches='tight')
+    plt.savefig('img/Difference_Latencies.png', bbox_inches='tight')
     plt.clf()
-    print('Plot img/Latencies.png generated')
+    print('Plot img/Difference_Latencies.png generated')
 
 df = calculate_df( pd.read_csv('result_mean.csv') )
 latencies_plot(df)

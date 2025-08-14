@@ -16,6 +16,14 @@ def format_label(size):
     elif int(size) == 102400:
         return '100KB'
 
+def format_producerrate(rate):
+    if int(rate) == 100:
+        return '100 events per second'
+    elif int(rate) == 1000:
+        return '1,000 events per second'
+    elif int(rate) == 10000:
+        return '10,000 events per second'
+
 ########################################################################
 # CDF by Producer Rate
 ########################################################################
@@ -121,3 +129,72 @@ df1, df2 = get_dfs(df)
 
 throughout_subplot(df1, df2, 'OMB_Throughout')
 
+########################################################################
+# Percentage difference between latencies
+########################################################################
+
+def concat_values(series):
+    series = list(series)
+    return (series[0] / series[1])
+
+def calculate_df(data):
+    new_data = {
+        'Test_Case': [],
+        'Message_Size': [],
+        'Producer_Rate': [],
+        'Latency50': [],
+        'Latency75': [],
+        'Latency95': [],
+        'Latency99': []
+    }
+    
+    for index, row in data.iterrows():
+        new_data['Test_Case'].append(row['Test_Case'])
+        new_data['Message_Size'].append(  format_label(row['Message_Size']) )
+        new_data['Producer_Rate'].append( int(row['Producer_Rate']) )
+        new_data['Latency50'].append(row['OMB_Latency_50'])
+        new_data['Latency75'].append(row['OMB_Latency_75'])
+        new_data['Latency95'].append(row['OMB_Latency_95'])
+        new_data['Latency99'].append(row['OMB_Latency_99'])
+    
+    df = pd.DataFrame(new_data)
+    df = df.groupby(['Test_Case', 'Message_Size', 'Producer_Rate']).agg({
+        'Latency50': concat_values,
+        'Latency75': concat_values,
+        'Latency95': concat_values,
+        'Latency99': concat_values
+    }).reset_index()
+    return df
+
+def split_producerrate(data):
+    data1 = data[ data['Producer_Rate'] == 100 ]
+    data2 = data[ data['Producer_Rate'] == 1000 ]
+    data3 = data[ data['Producer_Rate'] == 10000 ]
+    return [data1, data2, data3]
+
+def latencies_plot(data):
+    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+    datas = split_producerrate(data)
+    
+    for i in range(3):
+        lbl = format_producerrate(datas[i]['Producer_Rate'].iloc[0])
+        axs[i].set_title(lbl)
+        
+        axs[i].set_xlabel('Message Sizes')
+        axs[i].set_ylabel('Percentage Difference Between Lacencies')
+        axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency50'], label="Latency 50")
+        axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency75'], label="Latency 75")
+        axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency95'], label="Latency 95")
+        axs[i].plot(datas[i]['Message_Size'], datas[i]['Latency99'], label="Latency 99")
+        axs[i].set_ylim(0.0, 1.0)
+        axs[i].legend()
+        axs[i].grid(True)
+    
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig('img/Latencies.png', bbox_inches='tight')
+    plt.clf()
+    print('Plot img/Latencies.png generated')
+
+df = calculate_df( pd.read_csv('result_mean.csv') )
+latencies_plot(df)
